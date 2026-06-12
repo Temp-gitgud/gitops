@@ -1,0 +1,14 @@
+# file: .github/workflows/validate.yml
+name: validate
+on:
+  pull_request:
+    paths: ["k8s/**"]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          curl -sSLo kc.tgz https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz
+          tar -xzf kc.tgz && sudo mv kubeconform /usr/local/bin/
+      - run: kubeconform -strict -summary k8s/   # validate schema, KHÔNG apply
