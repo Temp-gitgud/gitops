@@ -1,0 +1,15 @@
+# file: argocd/apps/api.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata: { name: api, namespace: argocd }
+spec:
+  source:
+    repoURL: https://github.com/<ban>/gitops.git
+    path: k8s-api
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }
+    syncOptions: [ CreateNamespace=true ]

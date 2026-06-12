@@ -1,0 +1,11 @@
+# file: k8s-api/servicemonitor.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: api
+  namespace: demo
+spec:
+  selector:
+    matchLabels: { app: api }
+  endpoints:
+  - { port: http, path: /metrics, interval: 15s }
