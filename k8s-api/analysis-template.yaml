@@ -1,0 +1,19 @@
+# file: k8s-api/analysis-template.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: api-success-rate
+  namespace: demo
+spec:
+  metrics:
+  - name: success-rate
+    interval: 30s
+    successCondition: result[0] >= 0.95     # >=95% thành công
+    failureLimit: 3                          # tệ 3 lần liên tiếp → ABORT
+    provider:
+      prometheus:
+        address: http://kube-prometheus-stack-prometheus.monitoring:9090
+        query: |
+          sum(rate(flask_http_request_total{namespace="demo",http_status!~"5.."}[2m]))
+          /
+          sum(rate(flask_http_request_total{namespace="demo"}[2m]))

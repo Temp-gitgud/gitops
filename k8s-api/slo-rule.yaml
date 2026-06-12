@@ -1,0 +1,26 @@
+# file: k8s-api/slo-rule.yaml
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: api-slo
+  namespace: demo
+  labels:
+    release: kube-prometheus-stack    # label để prometheus pick up
+spec:
+  groups:
+  - name: api.slo
+    rules:
+    # Burn rate fast: 1h window, threshold = 14.4x (cháy trong ~2h)
+    - alert: APIHighBurnRate
+      expr: |
+        (
+          sum(rate(flask_http_request_total{namespace="demo",http_status=~"5.."}[1h]))
+          /
+          sum(rate(flask_http_request_total{namespace="demo"}[1h]))
+        ) > (14.4 * 0.005)
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "API SLO burn rate critical"
+        description: "Error budget burning at >14.4x rate"
