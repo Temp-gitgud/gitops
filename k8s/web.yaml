@@ -1,7 +1,21 @@
-# file: gitops/k8s/web.yaml
+# file: k8s/web.yaml  (thay toàn bộ nội dung)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  namespace: demo
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"   # chạy sau Namespace
+data:
+  MESSAGE: "hello from gitops"
+---
 apiVersion: apps/v1
 kind: Deployment
-metadata: { name: web, namespace: demo }
+metadata:
+  name: web
+  namespace: demo
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"   # chạy sau ConfigMap
 spec:
   replicas: 2
   selector: { matchLabels: { app: web } }
@@ -9,4 +23,18 @@ spec:
     metadata: { labels: { app: web } }
     spec:
       containers:
-      - { name: web, image: nginx:1.27 }
+      - name: web
+        image: nginx:1.27
+        envFrom:
+        - configMapRef: { name: web-config }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  namespace: demo
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"   # chạy cuối
+spec:
+  selector: { app: web }
+  ports: [ { port: 80, targetPort: 80 } ]
