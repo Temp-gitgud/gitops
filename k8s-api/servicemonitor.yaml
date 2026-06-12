@@ -5,6 +5,7 @@ metadata:
   name: api
   namespace: demo
 spec:
+  project: default
   selector:
     matchLabels: { app: api }
   endpoints:
