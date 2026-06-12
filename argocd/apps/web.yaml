@@ -1,0 +1,16 @@
+# file: argocd/apps/web.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata: { name: web, namespace: argocd }
+spec:
+  project: default  
+  source:
+    repoURL: https://github.com/Temp-gitgud/gitops.git
+    path: k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated:
+      prune: true      # xóa khỏi cụm nếu xóa khỏi Git
+      selfHeal: true   # tự sửa nếu ai đó edit tay
