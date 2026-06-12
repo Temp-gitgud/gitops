@@ -264,19 +264,19 @@ minikube image load w9-api:1 -p w9
 
  Bằng chứng
 
-![](./media/image1.png){width="5.769444444444445in"
+![](./media/image1.png)
 
-![](./media/image2.png){width="5.769444444444445in" height="0.9152777777777777in"}
+![](./media/image2.png)
 
-![](./media/image3.png){width="5.769444444444445in" height="1.9847222222222223in"}
+![](./media/image3.png)
 
-![](./media/image4.png){width="5.769444444444445in" height="2.622916666666667in"}
+![](./media/image4.png)
 
-![](./media/image5.png){width="5.769444444444445in" height="2.6in"}
+![](./media/image5.png)
 
-![](./media/image6.png){width="5.761805555555555in" height="3.845833333333333in"}
+![](./media/image6.png)
 
-![](./media/image7.png){width="5.769444444444445in" height="1.1381944444444445in"}
+![](./media/image7.png)
 
 ![](./media/image8.png){width="5.761805555555555in"
 height="1.7458333333333333in"}
