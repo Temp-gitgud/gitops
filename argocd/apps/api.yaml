@@ -5,7 +5,7 @@ metadata: { name: api, namespace: argocd }
 spec:
   project: default
   source:
-    repoURL: https://github.com/<ban>/gitops.git
+    repoURL: https://github.com/Temp-gitgud/gitops.git
     path: k8s-api
     targetRevision: main
   destination:
